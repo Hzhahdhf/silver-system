@@ -16,9 +16,6 @@ jobs:
             os: windows-latest
           - name: macOS
             os: macos-15
-          - name: iOS
-            os: macos-15
-            target: iOS
           - name: Android32
             os: ubuntu-latest
             target: Android32
@@ -37,6 +34,7 @@ jobs:
         with:
           combine: true
           target: ${{ matrix.config.target }}
+          sdk: "5.11.2"
 
   package:
     name: Package builds
