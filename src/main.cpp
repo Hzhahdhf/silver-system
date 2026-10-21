@@ -150,7 +150,29 @@ class $modify(PredictiveBufferPlayer, PlayerObject) {
         return PlayerObject::releaseButton(btn);
     }
 
-    void update(float dt) {
+        void update(float dt) {
+        PlayerObject::update(dt);
+
+        if (m_fields->releaseNext) {
+            m_fields->releaseNext = false;
+            PlayerObject::releaseButton(PlayerButton::Jump);
+        }
+
+        if (m_fields->pending > 0) {
+            if (!isEnabled() || !groundMode()) {
+                m_fields->pending = 0;
+            } else if (m_isOnGround) {
+                // Landed. If still held, GD already jumps by itself.
+                if (m_fields->released) {
+                    PlayerObject::pushButton(PlayerButton::Jump);
+                    m_fields->releaseNext = true;
+                }
+                m_fields->pending = 0;
+            } else {
+                m_fields->pending--;
+            }
+        }
+    }
         PlayerObject::update(dt);
 
         auto& f = *m_fields;
