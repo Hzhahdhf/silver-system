@@ -9,6 +9,6 @@
   "id": "cesar.input-buffer",
   "name": "Predictive Input Buffer",
   "version": "v0.3.0",
-  "developer": "CesarGD96",
+  "developer": "LJc team",
   "description": "Input buffer: a click made in the air is kept for 2-16 ticks and fired on landing. Toggle it and pick the stage from the pause menu (all platforms). F6 cycles stages on desktop."
 }
