@@ -28,15 +28,25 @@ jobs:
 
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
+    continue-on-error: ${{ matrix.config.name == 'iOS' }}
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the mod
+        if: matrix.config.name != 'iOS'
         uses: geode-sdk/build-geode-mod@main
         with:
           combine: true
           target: ${{ matrix.config.target }}
+          sdk: "5.11.2"
+
+      - name: Build the mod (iOS)
+        if: matrix.config.name == 'iOS'
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          combine: true
+          target: iOS
           sdk: nightly
           bindings-ref: 1605f500d053f8de122bf5c7dc6d17c24866e02e
           build-args: -DSKIP_BUILDING_CODEGEN=ON
